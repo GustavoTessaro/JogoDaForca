@@ -1,4 +1,4 @@
-# 🎮 Jogo da Forca em C
+# 🎮 Jogo da Forca em C#
 
 Este projeto é uma implementação simples do **Jogo da Forca** em **C#**,
 executado no **console**. O jogo obtém **palavras aleatórias através de
