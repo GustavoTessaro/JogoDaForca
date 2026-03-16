@@ -121,6 +121,8 @@ class Program
             char[] vetorLetras = palavra.ToCharArray();
             char[] vetorLetrasAdivinhadas = new char[vetorLetras.Length];
 
+            List<char> letrasErradas = new List<char>();
+
             for (int i = 0; i < vetorLetras.Length; i++)
             {
                 vetorLetrasAdivinhadas[i] = '_';
@@ -136,6 +138,7 @@ class Program
             {
                 Console.WriteLine("\nPalavra: " + new string(vetorLetrasAdivinhadas));
                 Console.WriteLine("Tentativas restantes: " + tentativasRestantes);
+                Console.WriteLine("Letras erradas: " + string.Join(", ", letrasErradas));
                 Console.Write("Digite uma letra: ");
                 char letra = char.ToUpper(Console.ReadKey().KeyChar);
                 Console.WriteLine();
@@ -153,8 +156,16 @@ class Program
 
                 if (!acertou)
                 {
-                    tentativasRestantes--;
-                    Console.WriteLine("Letra incorreta!");
+                    if (!letrasErradas.Contains(letra))
+                    {
+                        letrasErradas.Add(letra);
+                        tentativasRestantes--;
+                        Console.WriteLine("Letra incorreta!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Você já tentou essa letra incorreta antes!");
+                    }
                 }
                 else
                 {
