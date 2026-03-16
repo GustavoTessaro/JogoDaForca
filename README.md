@@ -69,12 +69,13 @@ Caso a API falhe ou retorne HTML, o jogo usa a palavra padrão:
 ---
 
 ## 📂 Estrutura do Código
-
+```text
 Program
 ├── ObterPalavraAleatoria()
 ├── DesenharForca()
 ├── RemoverAcentos()
 └── Main()
+```
 
 ---
 
