@@ -42,6 +42,36 @@ class Program
         }
     }
 
+    public static void DesenharForca(int erros)
+    {
+        // Usamos @ antes da string para facilitar o desenho ou \\ para barras invertidas
+        string[] estagios = {
+        "  +---+\n  |   |\n      |\n      |\n      |\n      |", 
+        
+        "  +---+\n  |   |\n  O   |\n      |\n      |\n      |", 
+
+        "  +---+\n  |   |\n  O   |\n  x   |\n      |\n      |", 
+
+        "  +---+\n  |   |\n  O   |\n /x   |\n      |\n      |", 
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n      |\n      |", 
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n      |", 
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n /    |", 
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n / \\  |\n",
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n / \\  |\n Vidas: ♥ ♥ X",
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n / \\  |\n Vidas: ♥ X X",
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n / \\  |\n Vidas: X X X"
+        };
+
+        Console.WriteLine(estagios[erros]);
+
+    }
 
     public static string RemoverAcentos(string palavra)
     {
@@ -76,7 +106,7 @@ class Program
             Console.WriteLine("Escolha a dificuldade:");
             Console.WriteLine("1 - Fácil (10 tentativas)");
             Console.WriteLine("2 - Médio (7 tentativas)");
-            Console.WriteLine("3 - Difícil (5 tentativas)");
+            Console.WriteLine("3 - Difícil (5 tentativas SEM PERNAS)");
             Console.WriteLine("4 - Sair");
 
             while (dificuldade < 1 || dificuldade > 4)
@@ -134,8 +164,12 @@ class Program
 
             }
 
+            int erros = 0;
+
             while (tentativasRestantes > 0)
             {
+                Console.Clear();
+                DesenharForca(erros);
                 Console.WriteLine("\nPalavra: " + new string(vetorLetrasAdivinhadas));
                 Console.WriteLine("Tentativas restantes: " + tentativasRestantes);
                 Console.WriteLine("Letras erradas: " + string.Join(", ", letrasErradas));
@@ -160,6 +194,7 @@ class Program
                     {
                         letrasErradas.Add(letra);
                         tentativasRestantes--;
+                        erros++;
                         Console.WriteLine("Letra incorreta!");
                     }
                     else
@@ -194,6 +229,7 @@ class Program
             else
             {
                 dificuldade = 0;
+                Console.Clear();
             }
 
         }
