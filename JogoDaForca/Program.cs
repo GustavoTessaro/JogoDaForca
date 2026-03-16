@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Text;
 using System.Globalization;
+using System.Threading;
 
 class Program
 {
@@ -196,15 +197,18 @@ class Program
                         tentativasRestantes--;
                         erros++;
                         Console.WriteLine("Letra incorreta!");
+                        Thread.Sleep(500);
                     }
                     else
                     {
                         Console.WriteLine("Você já tentou essa letra incorreta antes!");
+                        Thread.Sleep(500);
                     }
                 }
                 else
                 {
                     Console.WriteLine("Letra correta!");
+                    Thread.Sleep(500);
                 }
 
                 if (new string(vetorLetrasAdivinhadas) == palavra)
