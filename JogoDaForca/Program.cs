@@ -47,19 +47,19 @@ class Program
     {
         // Usamos @ antes da string para facilitar o desenho ou \\ para barras invertidas
         string[] estagios = {
-        "  +---+\n  |   |\n      |\n      |\n      |\n      |", 
-        
-        "  +---+\n  |   |\n  O   |\n      |\n      |\n      |", 
+        "  +---+\n  |   |\n      |\n      |\n      |\n      |",
 
-        "  +---+\n  |   |\n  O   |\n  x   |\n      |\n      |", 
+        "  +---+\n  |   |\n  O   |\n      |\n      |\n      |",
 
-        "  +---+\n  |   |\n  O   |\n /x   |\n      |\n      |", 
+        "  +---+\n  |   |\n  O   |\n  x   |\n      |\n      |",
 
-        "  +---+\n  |   |\n  O   |\n /x\\  |\n      |\n      |", 
+        "  +---+\n  |   |\n  O   |\n /x   |\n      |\n      |",
 
-        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n      |", 
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n      |\n      |",
 
-        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n /    |", 
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n      |",
+
+        "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n /    |",
 
         "  +---+\n  |   |\n  O   |\n /x\\  |\n  x   |\n / \\  |\n",
 
@@ -166,6 +166,7 @@ class Program
             }
 
             int erros = 0;
+            bool chutouPalavra = false;
 
             while (tentativasRestantes > 0)
             {
@@ -174,9 +175,44 @@ class Program
                 Console.WriteLine("\nPalavra: " + new string(vetorLetrasAdivinhadas));
                 Console.WriteLine("Tentativas restantes: " + tentativasRestantes);
                 Console.WriteLine("Letras erradas: " + string.Join(", ", letrasErradas));
-                Console.Write("Digite uma letra: ");
+                Console.Write("Digite uma letra ou digite 1 para chutar uma palavra inteira (UMA TENTATIVA): ");
                 char letra = char.ToUpper(Console.ReadKey().KeyChar);
                 Console.WriteLine();
+
+                bool verifica = true;
+
+                if (letra == '1')
+                {
+                    while (verifica == true)
+                    {
+
+                            Console.Write("Digite a palavra secreta (se houver espaços digite '-' no lugar): ");
+                            string? palavraChutada = Console.ReadLine();
+                            palavraChutada = palavraChutada.ToUpper();
+
+                            if(palavraChutada == palavra)
+                            {
+                                
+                                Console.WriteLine("\nParabéns! Você adivinhou a palavra: " + palavra);
+                                verifica = false;
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nGame over! A palavra era: " + palavra);
+                                verifica = false;
+
+                            }
+                    }
+
+                }
+
+                if(verifica == false)
+                {
+                    chutouPalavra = true;
+                    break;
+
+                }
 
                 bool acertou = false;
 
@@ -218,7 +254,7 @@ class Program
                 }
             }
 
-            if (new string(vetorLetrasAdivinhadas) != palavra)
+            if (new string(vetorLetrasAdivinhadas) != palavra && chutouPalavra == false)
             {
                 Console.WriteLine("\nGame over! A palavra era: " + palavra);
             }
