@@ -108,6 +108,7 @@ class Program
 
         while (verifica == true)
         {
+            Console.Clear();
             Console.WriteLine("Categorias: ");
             Console.WriteLine("1 - Animais");
             Console.WriteLine("2 - Frutas");
@@ -160,7 +161,9 @@ class Program
         {
             palavra = "";
             escolhaFacil = false;
+            dificuldade = 0;
 
+            Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("Escolha a dificuldade:");
             Console.WriteLine("1 - Fácil (10 tentativas e Escolher Categoria do Banco de Dados)");
@@ -334,6 +337,7 @@ class Program
             if (resposta != "s")
             {
                 jogarNovamente = false;
+                Console.WriteLine("Saindo do jogo. Até a próxima!");
             }
             else
             {
