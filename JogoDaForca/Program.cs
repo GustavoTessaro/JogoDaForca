@@ -90,6 +90,61 @@ class Program
 
         return sb.ToString().Normalize(NormalizationForm.FormC);
     }
+
+    public static string escolhendoCategorias()
+    {
+        bool verifica = true;
+        string escolha = "";
+        string palavraSorteada = "";
+        Random random = new Random();
+
+        var categorias = new Dictionary<string, string[]>
+    {
+        { "1", new string[] { "Gato", "Cachorro", "Leao", "Tigre", "Zebra", "Cavalo", "Vaca", "Pato", "Galinha", "Coelho", "Macaco", "Elefante", "Girafa", "Peixe", "Baleia", "Rato", "Sapo", "Urso", "Lobo", "Cobra", "Aranha", "Abelha", "Formiga", "Tatu", "Coruja", "Pomba", "Jacare", "Ovelha", "Porco", "Galo" }},
+        { "2", new string[] { "Maca", "Banana", "Uva", "Laranja", "Limao", "Pera", "Manga", "Abacaxi", "Melancia", "Morango", "Amora", "Cereja", "Coco", "Kiwi", "Mamao", "Melao", "Ameixa", "Caju", "Goiaba", "Jabuticaba", "Jaca", "Figo", "Framboesa", "Maracuja", "Nectarina", "Pitaya", "Roma", "Tangerina", "Abacate", "Acerola" }},
+        { "3", new string[] { "Cadeira", "Mesa", "Cama", "Porta", "Janela", "Garfo", "Faca", "Prato", "Copo", "Chave", "Caneta", "Lapis", "Livro", "Bolsa", "Relogio", "Escova", "Balde", "Martelo", "Tesoura", "Sabonete", "Toalha", "Vaso", "Quadro", "Espelho", "Tapete", "Lampada", "Pente", "Caderno", "Gaveta" }},
+        { "4", new string[] { "Brasil", "Angola", "Canada", "Egito", "Franca", "Grecia", "Italia", "Japao", "Mexico", "Russia", "Suica", "China", "Chile", "India", "Portugal", "Espanha", "Alemanha", "Argentina", "Belgica", "Catar", "Cuba", "Gana", "Iraque", "Israel", "Jamaica", "Marrocos", "Noruega", "Peru", "Turquia", "Uruguai" }}
+    };
+
+        while (verifica == true)
+        {
+            Console.WriteLine("Categorias: ");
+            Console.WriteLine("1 - Animais");
+            Console.WriteLine("2 - Frutas");
+            Console.WriteLine("3 - Objetos");
+            Console.WriteLine("4 - Países");
+            Console.WriteLine("5 - Voltar");
+            Console.Write("Digite o número da categoria: ");
+
+            escolha = Console.ReadLine() ?? "";
+
+            if (categorias.ContainsKey(escolha))
+            {
+                string[] listaSelecionada = categorias[escolha];
+
+                int indiceAleatorio = random.Next(0, listaSelecionada.Length);
+
+                palavraSorteada = listaSelecionada[indiceAleatorio].ToUpper();
+
+                verifica = false;
+            }
+            else if (escolha == "5")
+            {
+                palavraSorteada = "VOLTAR";
+                verifica = false;
+            }
+            else
+            {
+                Console.WriteLine("Opção inválida!");
+                Thread.Sleep(1000);
+                Console.Clear();
+
+            }
+
+        }
+
+        return palavraSorteada;
+    }
     static void Main(string[] args)
     {
 
@@ -97,17 +152,20 @@ class Program
         int tentativasRestantes = 0;
         String palavra = "";
         bool jogarNovamente = true;
+        bool escolhaFacil = false;
 
         Console.WriteLine("Bem-vindo ao Jogo da Forca!");
 
         while (jogarNovamente == true)
         {
+            palavra = "";
+            escolhaFacil = false;
 
             Console.WriteLine("");
             Console.WriteLine("Escolha a dificuldade:");
-            Console.WriteLine("1 - Fácil (10 tentativas)");
-            Console.WriteLine("2 - Médio (7 tentativas)");
-            Console.WriteLine("3 - Difícil (5 tentativas SEM PERNAS)");
+            Console.WriteLine("1 - Fácil (10 tentativas e Escolher Categoria do Banco de Dados)");
+            Console.WriteLine("2 - Médio (7 tentativas e Palavra Aleatória API)");
+            Console.WriteLine("3 - Difícil (5 tentativas SEM PERNAS e Palavra Aleatória API)");
             Console.WriteLine("4 - Sair");
 
             while (dificuldade < 1 || dificuldade > 4)
@@ -122,7 +180,9 @@ class Program
 
                     if (dificuldade == 1)
                     {
+                        palavra = escolhendoCategorias();
                         tentativasRestantes = 10;
+                        escolhaFacil = true;
                     }
                     else if (dificuldade == 2)
                     {
@@ -146,7 +206,16 @@ class Program
                 }
             }
 
-            palavra = ObterPalavraAleatoria().Result;
+            if(palavra == "VOLTAR")
+            {
+                continue;
+            }
+
+            if(escolhaFacil == false)
+            {
+                palavra = ObterPalavraAleatoria().Result;
+            }
+
             palavra = RemoverAcentos(palavra).ToUpper();
 
             char[] vetorLetras = palavra.ToCharArray();
@@ -186,28 +255,28 @@ class Program
                     while (verifica == true)
                     {
 
-                            Console.Write("Digite a palavra secreta (se houver espaços digite '-' no lugar): ");
-                            string? palavraChutada = Console.ReadLine();
-                            palavraChutada = palavraChutada.ToUpper();
+                        Console.Write("Digite a palavra secreta (se houver espaços digite '-' no lugar): ");
+                        string? palavraChutada = Console.ReadLine();
+                        palavraChutada = palavraChutada.ToUpper();
 
-                            if(palavraChutada == palavra)
-                            {
-                                
-                                Console.WriteLine("\nParabéns! Você adivinhou a palavra: " + palavra);
-                                verifica = false;
+                        if (palavraChutada == palavra)
+                        {
 
-                            }
-                            else
-                            {
-                                Console.WriteLine("\nGame over! A palavra era: " + palavra);
-                                verifica = false;
+                            Console.WriteLine("\nParabéns! Você adivinhou a palavra: " + palavra);
+                            verifica = false;
 
-                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nGame over! A palavra era: " + palavra);
+                            verifica = false;
+
+                        }
                     }
 
                 }
 
-                if(verifica == false)
+                if (verifica == false)
                 {
                     chutouPalavra = true;
                     break;
